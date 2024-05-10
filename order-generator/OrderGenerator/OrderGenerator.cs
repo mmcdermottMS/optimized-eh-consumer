@@ -58,6 +58,7 @@ namespace OrderGenerator
             for (int i = 0; i < orderCount; i++)
             {
                 var order = orderGenerator.Generate();
+                order.Items = new List<Item>();
 
                 var itemCount = new Random().Next(1, 20);
                 for (int j = 0; j < itemCount; j++)
