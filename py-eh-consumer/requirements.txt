@@ -4,3 +4,4 @@
 
 azure-monitor-opentelemetry
 azure-functions
+pydantic
