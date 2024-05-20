@@ -4,5 +4,5 @@ from pydantic import BaseModel
 from models.Item import Item
 
 class Order(BaseModel):
-    id: Optional[int] = -99
+    id: str
     items: Optional[List[Item]] = None

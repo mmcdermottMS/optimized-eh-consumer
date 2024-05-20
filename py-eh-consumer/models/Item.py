@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
 class Item(BaseModel):
-    id: int
-    order_id: int
+    id: str
+    order_id: str
     description: str
     price: float
     

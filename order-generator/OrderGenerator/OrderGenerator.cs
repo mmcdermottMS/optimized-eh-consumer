@@ -37,7 +37,6 @@ namespace OrderGenerator
 
             var orders = new List<Order>();
 
-
             var orderGenerator = new Faker<Order>()
                 .StrictMode(false)
                 .Rules((f, a) =>
@@ -60,7 +59,7 @@ namespace OrderGenerator
                 var order = orderGenerator.Generate();
                 order.Items = new List<Item>();
 
-                var itemCount = new Random().Next(1, 20);
+                var itemCount = new Random().Next(100, 120);
                 for (int j = 0; j < itemCount; j++)
                 {
                     var item = itemGenerator.Generate();
