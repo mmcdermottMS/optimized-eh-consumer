@@ -159,3 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 /order-generator/OrderGenerator/Properties/launchSettings.json
+/order-generator/OrderGenerator/Properties/PublishProfiles
+/order-generator/OrderGenerator/Properties/ServiceDependencies/msft-transform-eus-fa-generate - Zip Deploy
+/order-generator/OrderGenerator/Properties/serviceDependencies.json
+/order-generator/OrderGenerator/Properties/serviceDependencies.msft-transform-eus-fa-generate - Zip Deploy.json
