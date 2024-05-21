@@ -44,13 +44,18 @@ async def transform(messages: List[func.EventHubEvent], context) -> None:
                 items: List[Item] = []
                 for item in order.items:
                     items.append(item)
-                 
-                order_tasks.append(AsyncCosmosService.upsertItemsInBatch(items, order.id, "ItemsAsyncBatch"))
                 
+                #Create a list of async tasks to upsert the items in a batch.  One task per
+                #message recieved.
+                order_tasks.append(AsyncCosmosService.upsertItemsInBatch(items, order.id, "ItemsAsyncBatch"))
+            
+            #Upsert the order items using transactinoal batch operations    
             await asyncio.gather(*order_tasks)
             
+            #Upsert the order items asynchronously, but in series
             await AsyncCosmosService.upsertItemsInSeries(items, order.id, "ItemsAsyncSeries")
             
+            #Upsert the order items synchronously, but in series
             CosmosService.upsertItemsInSeries(items, order.id, "ItemsSyncSeries")
             
         except Exception as e:

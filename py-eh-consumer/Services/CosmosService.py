@@ -23,7 +23,7 @@ def upsertItemsInSeries(items: List[Item], order_id: str, container_name: str):
             for item in items:
                 container.upsert_item(item.model_dump())
                 
-            logging.info(f"Upserted {len(items)} items in: {time.perf_counter() - start:0.4f} seconds.")
+            logging.info(f"Upserted {len(items)} items in: {time.perf_counter() - start:0.4f} seconds. - Sync in Series")
             
         except CosmosHttpResponseError as e:
             logging.error(f"Error operation: {e.status_code}, error operation response: {e.message}")
