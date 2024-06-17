@@ -35,6 +35,15 @@ namespace OrderGenerator
                 orderCount = 1;
             }
 
+            if (!int.TryParse(req.Query["itemCount"], out int itemCount))
+            {
+                itemCount = 10;
+            }
+            if (itemCount < 1)
+            {
+                itemCount = 10;
+            }
+
             var orders = new List<Order>();
 
             var orderGenerator = new Faker<Order>()
@@ -59,7 +68,7 @@ namespace OrderGenerator
                 var order = orderGenerator.Generate();
                 order.Items = new List<Item>();
 
-                var itemCount = new Random().Next(100, 120);
+                //var orderItemCount = new Random().Next(itemCount / 2, itemCount * 2);
                 for (int j = 0; j < itemCount; j++)
                 {
                     var item = itemGenerator.Generate();
@@ -72,9 +81,9 @@ namespace OrderGenerator
 
             await SendBatch(orders);
 
-
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
-            return new OkObjectResult("Welcome to Azure Functions!");
+            var message = $"Generated {orderCount} orders with approx. {itemCount} items each";
+            _logger.LogInformation(message);
+            return new OkObjectResult(message);
         }
 
         private async Task SendBatch(List<Order> orders)

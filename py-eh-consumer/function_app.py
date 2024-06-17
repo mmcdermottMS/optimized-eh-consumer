@@ -1,5 +1,6 @@
 import os
 import asyncio
+import time
 import azure.functions as func
 import logging
 from typing import List
@@ -37,11 +38,13 @@ async def transform(messages: List[func.EventHubEvent], context) -> None:
     with tracer.start_as_current_span("transform", context = extract(carrier)): # span name matches the function name
         try:
             logging.info(f'{len(messages)} Order events received.')
-                        
+                 
+            total_item_count = 0;       
             order_tasks = []
             for message in messages:
                 order = Order.model_validate_json(message.get_body().decode('utf-8'))
                 items: List[Item] = []
+                total_item_count += len(order.items)
                 for item in order.items:
                     items.append(item)
                 
@@ -49,14 +52,20 @@ async def transform(messages: List[func.EventHubEvent], context) -> None:
                 #message recieved.
                 order_tasks.append(AsyncCosmosService.upsertItemsInBatch(items, order.id, "ItemsAsyncBatch"))
             
-            #Upsert the order items using transactinoal batch operations    
+            #Upsert the order items using transactional batch operations
+            start = time.perf_counter()    
             await asyncio.gather(*order_tasks)
+            logging.info(f"OpType|Async Batch|{len(messages)}|{total_item_count}|{time.perf_counter() - start:0.4f}")
             
             #Upsert the order items asynchronously, but in series
+            start = time.perf_counter() 
             await AsyncCosmosService.upsertItemsInSeries(items, order.id, "ItemsAsyncSeries")
+            logging.info(f"OpType|Async Series|{len(messages)}|{total_item_count}|{time.perf_counter() - start:0.4f}")
             
             #Upsert the order items synchronously, but in series
+            start = time.perf_counter() 
             CosmosService.upsertItemsInSeries(items, order.id, "ItemsSyncSeries")
+            logging.info(f"OpType|Sync Series|{len(messages)}|{total_item_count}|{time.perf_counter() - start:0.4f}")
             
         except Exception as e:
             logging.error(e)

@@ -80,11 +80,8 @@ async def upsertItemsInSeries(items: List[Item], order_id: str, container_name: 
         container = database.get_container_client(container_name)
         
         try: 
-            start = time.perf_counter()
             for item in items:
                 await container.upsert_item(item.model_dump())
-                
-            logging.info(f"Upserted {len(items)} items in: {time.perf_counter() - start:0.4f} seconds. - Async in Series")
             
         except CosmosHttpResponseError as e:
             logging.error(f"Error operation: {e.status_code}, error operation response: {e.message}")

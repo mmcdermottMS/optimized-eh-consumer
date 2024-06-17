@@ -163,3 +163,4 @@ cython_debug/
 /order-generator/OrderGenerator/Properties/ServiceDependencies/msft-transform-eus-fa-generate - Zip Deploy
 /order-generator/OrderGenerator/Properties/serviceDependencies.json
 /order-generator/OrderGenerator/Properties/serviceDependencies.msft-transform-eus-fa-generate - Zip Deploy.json
+order-generator/Properties/PublishProfiles/msft-fdp-eus-fa-generate - Zip Deploy.pubxml
