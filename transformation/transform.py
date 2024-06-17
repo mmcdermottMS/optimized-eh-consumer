@@ -10,19 +10,23 @@ from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-from models.Order import Order
-from models.Item import Item
-import Services.AsyncCosmosService as AsyncCosmosService
-import Services.CosmosService as CosmosService
+from common.models.Order import Order
+from common.models.Item import Item
+import transformation.CosmosService as CosmosService
 
 app = func.FunctionApp()
 
+transform_function_bp = func.Blueprint()
+
 configure_azure_monitor()
 
-@app.event_hub_message_trigger(
+TRANSFORM_EH_NAME = os.environ['TRANSFORM_EH_NAME']
+COSMOS_CONTAINER_NAME = os.environ['COSMOS_CONTAINER_NAME']
+
+@transform_function_bp.event_hub_message_trigger(
     arg_name="messages", 
-    event_hub_name="transform", 
-    connection="EH_CONN_STR",
+    event_hub_name=TRANSFORM_EH_NAME, 
+    connection="EHNS_CONN_STRING",
     cardinality=func.Cardinality.MANY
 ) 
 async def transform(messages: List[func.EventHubEvent], context) -> None:
@@ -50,22 +54,12 @@ async def transform(messages: List[func.EventHubEvent], context) -> None:
                 
                 #Create a list of async tasks to upsert the items in a batch.  One task per
                 #message recieved.
-                order_tasks.append(AsyncCosmosService.upsertItemsInBatch(items, order.id, "ItemsAsyncBatch"))
+                order_tasks.append(CosmosService.upsertItemsInBatch(items, order.id, COSMOS_CONTAINER_NAME))
             
             #Upsert the order items using transactional batch operations
             start = time.perf_counter()    
             await asyncio.gather(*order_tasks)
             logging.info(f"OpType|Async Batch|{len(messages)}|{total_item_count}|{time.perf_counter() - start:0.4f}")
-            
-            #Upsert the order items asynchronously, but in series
-            start = time.perf_counter() 
-            await AsyncCosmosService.upsertItemsInSeries(items, order.id, "ItemsAsyncSeries")
-            logging.info(f"OpType|Async Series|{len(messages)}|{total_item_count}|{time.perf_counter() - start:0.4f}")
-            
-            #Upsert the order items synchronously, but in series
-            start = time.perf_counter() 
-            CosmosService.upsertItemsInSeries(items, order.id, "ItemsSyncSeries")
-            logging.info(f"OpType|Sync Series|{len(messages)}|{total_item_count}|{time.perf_counter() - start:0.4f}")
             
         except Exception as e:
             logging.error(e)

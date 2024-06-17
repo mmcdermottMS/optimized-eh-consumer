@@ -7,11 +7,11 @@ from retry import retry
 from azure.cosmos.exceptions import CosmosBatchOperationError, CosmosHttpResponseError
 from azure.cosmos.aio import CosmosClient
 
-from models.Item import Item
+from common.models.Item import Item
 
 ENDPOINT = os.environ["COSMOS_ENDPOINT"]
 KEY = os.environ["COSMOS_KEY"]
-DATABASE_NAME = os.environ["DATABASE_NAME"]
+DATABASE_NAME = os.environ["COSMOS_DATABASE_NAME"]
 MAX_BATCH_SIZE_IN_CHAR = (int(os.environ["MAX_BATCH_SIZE_IN_MB"]) * 1024 * 1024) / 4 #Assuming UTF-8 encoding, and a possible size of 4 bytes per character
 MAX_BATCH_ITEM_COUNT = int(os.environ["MAX_BATCH_ITEM_COUNT"])
 
