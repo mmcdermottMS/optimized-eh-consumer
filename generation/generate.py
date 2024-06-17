@@ -11,6 +11,8 @@ from common.models.Order import Order
 
 import azure.functions as func 
 
+#Instead of creating the app as an azure.functions app, we create it as a blueprint instead
+#This allows us to use the app as a blueprint in the main function_app.py entry point used by the Azure Functions runtime
 generate_function_bp = func.Blueprint() 
 
 configure_azure_monitor()
