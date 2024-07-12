@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../common/models')
+
 import os
 import azure.functions as func
 import logging
@@ -9,8 +12,6 @@ from ingestion.publisher import publish
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-import sys
-sys.path.insert(1, '../common/models')
 from Order import Order
 
 #Instead of creating the app as an azure.functions app, we create it as a blueprint instead

@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../common/models')
+
 import random
 
 #Import the Azure Open Telemetry and native Open Telemetry modules
@@ -6,8 +9,6 @@ from generation.publisher import publish
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-import sys
-sys.path.insert(1, '../common/models')
 from Item import Item
 from Order import Order
 

@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../common/models')
+
 import os
 import logging
 from typing import List
@@ -5,10 +8,7 @@ from typing import List
 from azure.eventhub import EventData
 from azure.eventhub.aio import EventHubProducerClient
 
-import sys
-sys.path.insert(1, '../common/models')
 from Order import Order
-
 
 CONNECTION_STR = os.environ['EHNS_CONN_STRING']
 EVENTHUB_NAME = os.environ['INGEST_EH_NAME']

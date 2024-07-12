@@ -1,3 +1,6 @@
+import sys
+sys.path.append('../common/models')
+
 import logging
 import os
 import time
@@ -7,8 +10,6 @@ from retry import retry
 from azure.cosmos.exceptions import CosmosBatchOperationError, CosmosHttpResponseError
 from azure.cosmos.aio import CosmosClient
 
-import sys
-sys.path.insert(1, '../common/models')
 from Item import Item
 
 ENDPOINT = os.environ["COSMOS_ENDPOINT"]

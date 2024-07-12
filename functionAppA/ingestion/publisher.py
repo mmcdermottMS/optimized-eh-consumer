@@ -7,7 +7,7 @@ from azure.eventhub.aio import EventHubProducerClient
 
 
 import sys
-sys.path.insert(1, '../common/models')
+sys.path.append('../common/models')
 from Order import Order
 
 CONNECTION_STR = os.environ['EHNS_CONN_STRING']

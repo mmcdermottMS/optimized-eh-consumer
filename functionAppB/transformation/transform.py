@@ -11,7 +11,7 @@ from opentelemetry import trace
 from opentelemetry.propagate import extract
 
 import sys
-sys.path.insert(1, '../common/models')
+sys.path.append('../common/models')
 from Item import Item
 from Order import Order
 
