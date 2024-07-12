@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"name": "common",
+			"path": "common"
+		},
+		{
+			"name": "functionAppA",
+			"path": "functionAppA"
+		},
+		{
+			"name": "functionAppB",
+			"path": "functionAppB"
+		}
+	],
+	"settings": {
+		"debug.internalConsoleOptions": "neverOpen"
+	}
+}

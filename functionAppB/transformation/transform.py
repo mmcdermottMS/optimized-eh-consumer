@@ -10,8 +10,11 @@ from azure.monitor.opentelemetry import configure_azure_monitor
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-from common.models.Order import Order
-from common.models.Item import Item
+import sys
+sys.path.insert(1, '../common/models')
+from Item import Item
+from Order import Order
+
 import transformation.CosmosService as CosmosService
 
 app = func.FunctionApp()

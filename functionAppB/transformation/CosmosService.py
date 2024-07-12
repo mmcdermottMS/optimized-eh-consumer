@@ -7,7 +7,9 @@ from retry import retry
 from azure.cosmos.exceptions import CosmosBatchOperationError, CosmosHttpResponseError
 from azure.cosmos.aio import CosmosClient
 
-from common.models.Item import Item
+import sys
+sys.path.insert(1, '../common/models')
+from Item import Item
 
 ENDPOINT = os.environ["COSMOS_ENDPOINT"]
 KEY = os.environ["COSMOS_KEY"]

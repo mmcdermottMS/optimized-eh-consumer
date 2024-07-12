@@ -6,7 +6,6 @@ from generation.publisher import publish
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-
 import sys
 sys.path.insert(1, '../common/models')
 from Item import Item
