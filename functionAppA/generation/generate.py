@@ -6,8 +6,11 @@ from generation.publisher import publish
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-from common.models.Item import Item
-from common.models.Order import Order
+
+import sys
+sys.path.insert(1, '../common/models')
+from Item import Item
+from Order import Order
 
 import azure.functions as func 
 

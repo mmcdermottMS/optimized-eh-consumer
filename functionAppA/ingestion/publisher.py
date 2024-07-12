@@ -4,7 +4,11 @@ from typing import List
 
 from azure.eventhub import EventData
 from azure.eventhub.aio import EventHubProducerClient
-from common.models.Order import Order
+
+
+import sys
+sys.path.insert(1, '../common/models')
+from Order import Order
 
 CONNECTION_STR = os.environ['EHNS_CONN_STRING']
 EVENTHUB_NAME = os.environ['TRANSFORM_EH_NAME']

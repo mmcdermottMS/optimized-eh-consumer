@@ -1,7 +1,7 @@
 from typing import List, Optional
 from pydantic import BaseModel
 
-from common.models.Item import Item
+from Item import Item
 
 class Order(BaseModel):
     id: str

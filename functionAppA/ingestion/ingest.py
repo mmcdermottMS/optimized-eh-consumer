@@ -9,7 +9,9 @@ from ingestion.publisher import publish
 from opentelemetry import trace
 from opentelemetry.propagate import extract
 
-from common.models.Order import Order
+import sys
+sys.path.insert(1, '../common/models')
+from Order import Order
 
 #Instead of creating the app as an azure.functions app, we create it as a blueprint instead
 #This allows us to use the app as a blueprint in the main function_app.py entry point used by the Azure Functions runtime
