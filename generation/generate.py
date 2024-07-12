@@ -20,7 +20,7 @@ configure_azure_monitor()
 @generate_function_bp.route(route="generate") 
 async def generate(req: func.HttpRequest, context) -> func.HttpResponse: 
 
- #From https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/monitor/azure-monitor-opentelemetry#monitoring-in-azure-functions
+    #From https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/monitor/azure-monitor-opentelemetry#monitoring-in-azure-functions
     #Capture the OTel traceparent and tracestate from the current execution context, these will be passed along in the downstream calls
     carrier = {
       "traceparent": context.trace_context.Traceparent,
